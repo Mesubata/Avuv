@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Счетчик без побед Avulus</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: white;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+        
+        .orbitron {
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .counter-box {
+            box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
+            border: 1px solid rgba(0, 150, 255, 0.2);
+            background: rgba(10, 25, 47, 0.7);
+            backdrop-filter: blur(10px);
+        }
+        
+        .glow {
+            text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .floating {
+            animation: floating 6s ease-in-out infinite;
+        }
+        
+        @keyframes floating {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-15px); }
+            100% { transform: translateY(0px); }
+        }
+    </style>
+</head>
+<body class="flex flex-col items-center justify-center p-4">
+    <div class="max-w-4xl w-full counter-box rounded-2xl p-8 md:p-12 relative overflow-hidden">
+        <!-- Watermark effect -->
+        <div class="absolute -right-20 -top-20 opacity-10 floating">
+            <i class="fas fa-trophy text-[300px]"></i>
+        </div>
+        
+        <div class="relative z-10">
+            <h1 class="text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 glow">
+                <i class="fas fa-clock mr-3"></i> Без побед Avulus
+            </h1>
+            
+            <p class="text-lg md:text-xl text-center text-gray-300 mb-8 md:mb-12">
+                Сколько времени Avulus не выигрывало ни одного турнира
+            </p>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+                <div class="counter-box rounded-xl p-4 text-center pulse">
+                    <div class="text-4xl md:text-6xl orbitron" id="years">00</div>
+                    <div class="text-gray-300 mt-2">Лет</div>
+                </div>
+                <div class="counter-box rounded-xl p-4 text-center pulse">
+                    <div class="text-4xl md:text-6xl orbitron" id="months">00</div>
+                    <div class="text-gray-300 mt-2">Месяцев</div>
+                </div>
+                <div class="counter-box rounded-xl p-4 text-center pulse">
+                    <div class="text-4xl md:text-6xl orbitron" id="days">00</div>
+                    <div class="text-gray-300 mt-2">Дней</div>
+                </div>
+                <div class="counter-box rounded-xl p-4 text-center pulse">
+                    <div class="text-4xl md:text-6xl orbitron" id="hours">00</div>
+                    <div class="text-gray-300 mt-2">Часов</div>
+                </div>
+            </div>
+            
+            <div class="grid grid-cols-3 gap-4">
+                <div class="counter-box rounded-xl p-4 text-center">
+                    <div class="text-3xl md:text-5xl orbitron" id="minutes">00</div>
+                    <div class="text-gray-300 mt-2">Минут</div>
+                </div>
+                <div class="counter-box rounded-xl p-4 text-center">
+                    <div class="text-3xl md:text-5xl orbitron" id="seconds">00</div>
+                    <div class="text-gray-300 mt-2">Секунд</div>
+                </div>
+                <div class="counter-box rounded-xl p-4 text-center">
+                    <div class="text-3xl md:text-5xl orbitron" id="milliseconds">000</div>
+                    <div class="text-gray-300 mt-2">Миллисекунд</div>
+                </div>
+            </div>
+            
+            <div class="mt-8 md:mt-12 text-center">
+                <div class="text-sm md:text-base text-gray-400">
+                    <i class="fas fa-calendar-day mr-2"></i> Последняя победа: 25 октября 2024 года, 21:00
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="mt-8 text-center text-gray-400 text-sm">
+        Счетчик обновляется в реальном времени
+    </div>
+    
+    <script>
+        // Set the date we're counting from
+        const startDate = new Date("October 25, 2024 21:00:00").getTime();
+        
+        // Update the counter every millisecond
+        const timer = setInterval(function() {
+            // Get current date and time
+            const now = new Date().getTime();
+            
+            // Calculate the difference
+            const diff = now - startDate;
+            
+            // Calculate time units
+            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
+            const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
+            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
+            const milliseconds = diff % 1000;
+            
+            // Display the result
+            document.getElementById("years").innerHTML = years.toString().padStart(2, "0");
+            document.getElementById("months").innerHTML = months.toString().padStart(2, "0");
+            document.getElementById("days").innerHTML = days.toString().padStart(2, "0");
+            document.getElementById("hours").innerHTML = hours.toString().padStart(2, "0");
+            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, "0");
+            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, "0");
+            document.getElementById("milliseconds").innerHTML = milliseconds.toString().padStart(3, "0");
+            
+            // Add some visual effects when seconds change
+            if (milliseconds < 50) {
+                document.getElementById("seconds").classList.add("text-blue-400", "glow");
+            } else {
+                document.getElementById("seconds").classList.remove("text-blue-400", "glow");
+            }
+        }, 1);
+        
+        // Add some interactive effects
+        document.querySelectorAll('.counter-box').forEach(box => {
+            box.addEventListener('mouseenter', function() {
+                this.style.transform = 'scale(1.02)';
+                this.style.boxShadow = '0 0 20px rgba(0, 150, 255, 0.5)';
+            });
+            
+            box.addEventListener('mouseleave', function() {
+                this.style.transform = 'scale(1)';
+                this.style.boxShadow = '0 0 30px rgba(0, 150, 255, 0.3)';
+            });
+        });
+    </script>
+</body>
+</html>
