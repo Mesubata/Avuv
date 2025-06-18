@@ -3,167 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Счетчик без побед Avulus</title>
+    <title>AVULUS без трофеев</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto:wght@300;400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
         
         body {
-            font-family: 'Roboto', sans-serif;
-            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-            color: white;
-            min-height: 100vh;
-            overflow-x: hidden;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            background-color: #000;
+            color: #0f0;
+            overflow: hidden;
+            cursor: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='32' height='32' viewBox='0 0 32 32'><circle cx='16' cy='16' r='16' fill='%2300ff00'/></svg>"), auto;
         }
         
-        .orbitron {
-            font-family: 'Orbitron', sans-serif;
+        .counter {
+            text-shadow: 0 0 10px #0f0;
+            animation: flicker 0.5s infinite alternate;
         }
         
-        .counter-box {
-            box-shadow: 0 0 30px rgba(0, 150, 255, 0.3);
-            border: 1px solid rgba(0, 150, 255, 0.2);
-            background: rgba(10, 25, 47, 0.7);
-            backdrop-filter: blur(10px);
+        .glitch {
+            position: relative;
         }
         
-        .glow {
-            text-shadow: 0 0 10px rgba(0, 150, 255, 0.7);
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
         }
         
-        .pulse {
-            animation: pulse 2s infinite;
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 #f0f;
+            clip: rect(24px, 550px, 90px, 0);
+            animation: glitch-anim 2s infinite linear alternate-reverse;
         }
         
-        @keyframes pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.05); }
-            100% { transform: scale(1); }
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 #0ff;
+            clip: rect(85px, 550px, 140px, 0);
+            animation: glitch-anim2 2s infinite linear alternate-reverse;
         }
         
-        .floating {
-            animation: floating 6s ease-in-out infinite;
+        @keyframes flicker {
+            0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+                text-shadow: 0 0 10px #0f0;
+            }
+            20%, 24%, 55% {
+                text-shadow: none;
+            }
         }
         
-        @keyframes floating {
-            0% { transform: translateY(0px); }
-            50% { transform: translateY(-15px); }
-            100% { transform: translateY(0px); }
+        @keyframes glitch-anim {
+            0% { clip: rect(32px, 9999px, 34px, 0); }
+            10% { clip: rect(12px, 9999px, 28px, 0); }
+            20% { clip: rect(54px, 9999px, 66px, 0); }
+            30% { clip: rect(33px, 9999px, 39px, 0); }
+            40% { clip: rect(74px, 9999px, 82px, 0); }
+            50% { clip: rect(15px, 9999px, 44px, 0); }
+            60% { clip: rect(65px, 9999px, 79px, 0); }
+            70% { clip: rect(88px, 9999px, 99px, 0); }
+            80% { clip: rect(23px, 9999px, 35px, 0); }
+            90% { clip: rect(76px, 9999px, 88px, 0); }
+            100% { clip: rect(62px, 9999px, 74px, 0); }
+        }
+        
+        @keyframes glitch-anim2 {
+            0% { clip: rect(65px, 9999px, 95px, 0); }
+            10% { clip: rect(25px, 9999px, 65px, 0); }
+            20% { clip: rect(85px, 9999px, 100px, 0); }
+            30% { clip: rect(45px, 9999px, 75px, 0); }
+            40% { clip: rect(35px, 9999px, 55px, 0); }
+            50% { clip: rect(85px, 9999px, 110px, 0); }
+            60% { clip: rect(5px, 9999px, 25px, 0); }
+            70% { clip: rect(95px, 9999px, 115px, 0); }
+            80% { clip: rect(15px, 9999px, 45px, 0); }
+            90% { clip: rect(75px, 9999px, 105px, 0); }
+            100% { clip: rect(95px, 9999px, 125px, 0); }
+        }
+        
+        .blink {
+            animation: blink 1s step-end infinite;
+        }
+        
+        @keyframes blink {
+            from, to { opacity: 1; }
+            50% { opacity: 0; }
+        }
+        
+        .pixel-border {
+            border: 4px solid #0f0;
+            box-shadow: 0 0 20px #0f0;
+            position: relative;
+        }
+        
+        .pixel-border::before {
+            content: "";
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            right: -8px;
+            bottom: -8px;
+            border: 4px solid #f0f;
+            z-index: -1;
+        }
+        
+        .pixel-border::after {
+            content: "";
+            position: absolute;
+            top: -12px;
+            left: -12px;
+            right: -12px;
+            bottom: -12px;
+            border: 4px solid #0ff;
+            z-index: -2;
+        }
+        
+        .hit-counter {
+            position: fixed;
+            bottom: 10px;
+            right: 10px;
+            font-size: 12px;
+            background: #000;
+            padding: 2px 5px;
+            border: 1px solid #0f0;
+        }
+        
+        .marquee {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            white-space: nowrap;
+            animation: marquee 30s linear infinite;
+            background: #000;
+            border-top: 1px solid #0f0;
+            padding: 5px 0;
+        }
+        
+        @keyframes marquee {
+            0% { transform: translateX(100%); }
+            100% { transform: translateX(-100%); }
+        }
+        
+        .language-switcher {
+            position: fixed;
+            top: 10px;
+            right: 10px;
+            z-index: 100;
+        }
+        
+        .language-switcher button {
+            background: #000;
+            color: #0f0;
+            border: 1px solid #0f0;
+            padding: 2px 5px;
+            font-family: 'Comic Sans MS', cursive, sans-serif;
+            cursor: pointer;
+        }
+        
+        .language-switcher button:hover {
+            background: #0f0;
+            color: #000;
         }
     </style>
 </head>
-<body class="flex flex-col items-center justify-center p-4">
-    <div class="max-w-4xl w-full counter-box rounded-2xl p-8 md:p-12 relative overflow-hidden">
-        <!-- Watermark effect -->
-        <div class="absolute -right-20 -top-20 opacity-10 floating">
-            <i class="fas fa-trophy text-[300px]"></i>
-        </div>
+<body class="h-screen w-screen flex items-center justify-center">
+    <div class="language-switcher">
+        <button id="switchLanguage">EN</button>
+        <button id="muteButton" class="ml-2">🔊</button>
+    </div>
+    
+    <div class="text-center pixel-border p-8 m-4">
+        <h1 class="glitch text-6xl md:text-8xl font-bold mb-8" data-text="AVULUS">AVULUS</h1>
+        <div id="title" class="text-3xl md:text-5xl mb-12 counter">без трофеев</div>
         
-        <div class="relative z-10">
-            <h1 class="text-3xl md:text-5xl font-bold text-center mb-6 md:mb-10 glow">
-                <i class="fas fa-clock mr-3"></i> Без побед Avulus
-            </h1>
-            
-            <p class="text-lg md:text-xl text-center text-gray-300 mb-8 md:mb-12">
-                Сколько времени Avulus не выигрывало ни одного турнира
-            </p>
-            
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
-                <div class="counter-box rounded-xl p-4 text-center pulse">
-                    <div class="text-4xl md:text-6xl orbitron" id="years">00</div>
-                    <div class="text-gray-300 mt-2">Лет</div>
-                </div>
-                <div class="counter-box rounded-xl p-4 text-center pulse">
-                    <div class="text-4xl md:text-6xl orbitron" id="months">00</div>
-                    <div class="text-gray-300 mt-2">Месяцев</div>
-                </div>
-                <div class="counter-box rounded-xl p-4 text-center pulse">
-                    <div class="text-4xl md:text-6xl orbitron" id="days">00</div>
-                    <div class="text-gray-300 mt-2">Дней</div>
-                </div>
-                <div class="counter-box rounded-xl p-4 text-center pulse">
-                    <div class="text-4xl md:text-6xl orbitron" id="hours">00</div>
-                    <div class="text-gray-300 mt-2">Часов</div>
-                </div>
+        <div class="counter text-4xl md:text-6xl mb-4" id="days">00</div>
+        <div id="daysLabel" class="text-xl md:text-2xl mb-8">дней</div>
+        
+        <div class="flex justify-center gap-8">
+            <div>
+                <div class="counter text-3xl md:text-5xl" id="hours">00</div>
+                <div id="hoursLabel" class="text-lg md:text-xl">часов</div>
             </div>
-            
-            <div class="grid grid-cols-3 gap-4">
-                <div class="counter-box rounded-xl p-4 text-center">
-                    <div class="text-3xl md:text-5xl orbitron" id="minutes">00</div>
-                    <div class="text-gray-300 mt-2">Минут</div>
-                </div>
-                <div class="counter-box rounded-xl p-4 text-center">
-                    <div class="text-3xl md:text-5xl orbitron" id="seconds">00</div>
-                    <div class="text-gray-300 mt-2">Секунд</div>
-                </div>
-                <div class="counter-box rounded-xl p-4 text-center">
-                    <div class="text-3xl md:text-5xl orbitron" id="milliseconds">000</div>
-                    <div class="text-gray-300 mt-2">Миллисекунд</div>
-                </div>
+            <div>
+                <div class="counter text-3xl md:text-5xl" id="minutes">00</div>
+                <div id="minutesLabel" class="text-lg md:text-xl">минут</div>
             </div>
-            
-            <div class="mt-8 md:mt-12 text-center">
-                <div class="text-sm md:text-base text-gray-400">
-                    <i class="fas fa-calendar-day mr-2"></i> Последняя победа: 25 октября 2024 года, 21:00
-                </div>
+            <div>
+                <div class="counter text-3xl md:text-5xl" id="seconds">00</div>
+                <div id="secondsLabel" class="text-lg md:text-xl">секунд</div>
             </div>
         </div>
     </div>
     
-    <div class="mt-8 text-center text-gray-400 text-sm">
-        Счетчик обновляется в реальном времени
+    <div class="hit-counter">
+        <span id="hitCount">00001</span> visitors
     </div>
+    
+    <div class="marquee">
+        <span class="blink">!</span> AVULUS все еще без трофеев <span class="blink">!</span> Последнее обновление: никогда <span class="blink">!</span> Время идет <span class="blink">!</span> Счетчик начал отсчет 25 октября 2024 года в 21:00 <span class="blink">!</span> AVULUS все еще без трофеев <span class="blink">!</span>
+    </div>
+    
+    <audio id="bgMusic" loop autoplay>
+        <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    </audio>
     
     <script>
-        // Set the date we're counting from
-        const startDate = new Date("October 25, 2024 21:00:00").getTime();
-        
-        // Update the counter every millisecond
-        const timer = setInterval(function() {
-            // Get current date and time
-            const now = new Date().getTime();
-            
-            // Calculate the difference
-            const diff = now - startDate;
-            
-            // Calculate time units
-            const years = Math.floor(diff / (1000 * 60 * 60 * 24 * 365));
-            const months = Math.floor((diff % (1000 * 60 * 60 * 24 * 365)) / (1000 * 60 * 60 * 24 * 30));
-            const days = Math.floor((diff % (1000 * 60 * 60 * 24 * 30)) / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((diff % (1000 * 60)) / 1000);
-            const milliseconds = diff % 1000;
-            
-            // Display the result
-            document.getElementById("years").innerHTML = years.toString().padStart(2, "0");
-            document.getElementById("months").innerHTML = months.toString().padStart(2, "0");
-            document.getElementById("days").innerHTML = days.toString().padStart(2, "0");
-            document.getElementById("hours").innerHTML = hours.toString().padStart(2, "0");
-            document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, "0");
-            document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, "0");
-            document.getElementById("milliseconds").innerHTML = milliseconds.toString().padStart(3, "0");
-            
-            // Add some visual effects when seconds change
-            if (milliseconds < 50) {
-                document.getElementById("seconds").classList.add("text-blue-400", "glow");
-            } else {
-                document.getElementById("seconds").classList.remove("text-blue-400", "glow");
+        // Language settings
+        const translations = {
+            title: {
+                ru: "без трофеев",
+                en: "trophy-less"
+            },
+            days: {
+                ru: "дней",
+                en: "days"
+            },
+            hours: {
+                ru: "часов",
+                en: "hours"
+            },
+            minutes: {
+                ru: "минут",
+                en: "minutes"
+            },
+            seconds: {
+                ru: "секунд",
+                en: "seconds"
+            },
+            marquee: {
+                ru: "AVULUS все еще без трофеев ! Последнее обновление: никогда ! Время идет ! Счетчик начал отсчет 25 октября 2024 года в 21:00 ! AVULUS все еще без трофеев !",
+                en: "AVULUS is still trophy-less ! Last update: never ! Time is ticking ! Counter started on October 25, 2024 at 21:00 ! AVULUS is still trophy-less !"
+            },
+            visitors: {
+                ru: "посетителей",
+                en: "visitors"
             }
-        }, 1);
+        };
         
-        // Add some interactive effects
-        document.querySelectorAll('.counter-box').forEach(box => {
-            box.addEventListener('mouseenter', function() {
-                this.style.transform = 'scale(1.02)';
-                this.style.boxShadow = '0 0 20px rgba(0, 150, 255, 0.5)';
-            });
+        let currentLanguage = 'ru';
+        
+        // Switch language function
+        function switchLanguage() {
+            currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
+            document.getElementById('switchLanguage').textContent = currentLanguage === 'ru' ? 'EN' : 'RU';
             
-            box.addEventListener('mouseleave', function() {
-                this.style.transform = 'scale(1)';
-                this.style.boxShadow = '0 0 30px rgba(0, 150, 255, 0.3)';
-            });
+            // Update all text elements
+            document.getElementById('title').textContent = translations.title[currentLanguage];
+            document.getElementById('daysLabel').textContent = translations.days[currentLanguage];
+            document.getElementById('hoursLabel').textContent = translations.hours[currentLanguage];
+            document.getElementById('minutesLabel').textContent = translations.minutes[currentLanguage];
+            document.getElementById('secondsLabel').textContent = translations.seconds[currentLanguage];
+            document.querySelector('.marquee').innerHTML = translations.marquee[currentLanguage].split('!').join('<span class="blink">!</span>');
+            document.querySelector('#hitCount').nextSibling.textContent = ' ' + translations.visitors[currentLanguage];
+        }
+        
+        document.getElementById('switchLanguage').addEventListener('click', switchLanguage);
+        
+        // Detect browser language
+        const userLanguage = navigator.language || navigator.userLanguage;
+        if (userLanguage.startsWith('en')) {
+            currentLanguage = 'en';
+            switchLanguage();
+        }
+        
+        // Counter logic
+        const targetDate = new Date('2024-10-25T21:00:00').getTime();
+        
+        function updateCounter() {
+            const now = new Date().getTime();
+            const distance = now - targetDate;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            // Random glitch effect
+            if (Math.random() < 0.05) {
+                document.querySelector('.glitch').style.animation = 'none';
+                setTimeout(() => {
+                    document.querySelector('.glitch').style.animation = '';
+                }, 100);
+            }
+        }
+        
+        // Update counter immediately and then every second
+        updateCounter();
+        setInterval(updateCounter, 1000);
+        
+        // Hit counter (fake)
+        function updateHitCounter() {
+            let hits = parseInt(localStorage.getItem('hits') || '0');
+            hits += Math.floor(Math.random() * 3) + 1;
+            localStorage.setItem('hits', hits.toString());
+            document.getElementById('hitCount').textContent = hits.toString().padStart(5, '0');
+        }
+        
+        updateHitCounter();
+        setInterval(updateHitCounter, 5000);
+        
+        // Mute button functionality
+        const muteButton = document.getElementById('muteButton');
+        const music = document.getElementById('bgMusic');
+        
+        function toggleMute() {
+            if (music.muted) {
+                music.muted = false;
+                muteButton.textContent = '🔊';
+            } else {
+                music.muted = true;
+                muteButton.textContent = '🔇';
+            }
+        }
+        
+        muteButton.addEventListener('click', toggleMute);
+        
+        // Background music handling
+        music.volume = 0.3;
+        document.body.addEventListener('click', async function() {
+            try {
+                if (music.paused) {
+                    await music.play();
+                }
+            } catch (err) {
+                console.log('Audio playback failed:', err);
+            }
+        });
+
+        // Try to play on load
+        window.addEventListener('load', async () => {
+            try {
+                await music.play();
+            } catch (err) {
+                console.log('Autoplay blocked, waiting for user interaction');
+            }
+        });
+        
+        // Easter egg - Konami code
+        const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+        let konamiIndex = 0;
+        
+        document.addEventListener('keydown', function(e) {
+            if (e.key === konamiCode[konamiIndex]) {
+                konamiIndex++;
+                if (konamiIndex === konamiCode.length) {
+                    // Konami code entered!
+                    document.body.style.background = 'linear-gradient(45deg, #f0f, #0ff, #0f0)';
+                    document.querySelectorAll('.counter').forEach(el => {
+                        el.style.textShadow = '0 0 10px #fff';
+                    });
+                    konamiIndex = 0;
+                    setTimeout(() => {
+                        document.body.style.background = '#000';
+                        document.querySelectorAll('.counter').forEach(el => {
+                            el.style.textShadow = '0 0 10px #0f0';
+                        });
+                    }, 3000);
+                }
+            } else {
+                konamiIndex = 0;
+            }
         });
     </script>
 </body>
