@@ -173,29 +173,28 @@
 </head>
 <body class="h-screen w-screen flex items-center justify-center">
     <div class="language-switcher">
-        <button id="switchLanguage">EN</button>
-        <button id="muteButton" class="ml-2">🔊</button>
+        <button id="muteButton">🔊</button>
     </div>
     
     <div class="text-center pixel-border p-8 m-4">
         <h1 class="glitch text-6xl md:text-8xl font-bold mb-8" data-text="AVULUS">AVULUS</h1>
-        <div id="title" class="text-3xl md:text-5xl mb-12 counter">без трофеев</div>
+        <div id="title" class="text-3xl md:text-5xl mb-12 counter">trophy-less</div>
         
         <div class="counter text-4xl md:text-6xl mb-4" id="days">00</div>
-        <div id="daysLabel" class="text-xl md:text-2xl mb-8">дней</div>
+        <div id="daysLabel" class="text-xl md:text-2xl mb-8">days</div>
         
         <div class="flex justify-center gap-8">
             <div>
                 <div class="counter text-3xl md:text-5xl" id="hours">00</div>
-                <div id="hoursLabel" class="text-lg md:text-xl">часов</div>
+                <div id="hoursLabel" class="text-lg md:text-xl">hours</div>
             </div>
             <div>
                 <div class="counter text-3xl md:text-5xl" id="minutes">00</div>
-                <div id="minutesLabel" class="text-lg md:text-xl">минут</div>
+                <div id="minutesLabel" class="text-lg md:text-xl">minutes</div>
             </div>
             <div>
                 <div class="counter text-3xl md:text-5xl" id="seconds">00</div>
-                <div id="secondsLabel" class="text-lg md:text-xl">секунд</div>
+                <div id="secondsLabel" class="text-lg md:text-xl">seconds</div>
             </div>
         </div>
     </div>
@@ -205,7 +204,7 @@
     </div>
     
     <div class="marquee">
-        <span class="blink">!</span> AVULUS все еще без трофеев <span class="blink">!</span> Денег проёбано на ставках: $2308 <span class="blink">!</span> Счетчик начал отсчет с победы на RES Regional Finals <span class="blink">!</span> AVULUS все еще без трофеев <span class="blink">!</span>
+        <span class="blink">!</span> AVULUS is still trophy-less <span class="blink">!</span> Money lost on bets: $2,308 <span class="blink">!</span> The counter started counting down from the victory at RES Regional Finals <span class="blink">!</span> AVULUS is still trophy-less <span class="blink">!</span>
     </div>
     
     <audio id="bgMusic" loop autoplay>
@@ -213,63 +212,6 @@
     </audio>
     
     <script>
-        // Language settings
-        const translations = {
-            title: {
-                ru: "без трофеев",
-                en: "trophy-less"
-            },
-            days: {
-                ru: "дней",
-                en: "days"
-            },
-            hours: {
-                ru: "часов",
-                en: "hours"
-            },
-            minutes: {
-                ru: "минут",
-                en: "minutes"
-            },
-            seconds: {
-                ru: "секунд",
-                en: "seconds"
-            },
-            marquee: {
-                ru: "AVULUS все еще без трофеев ! Денег проёбано на ставках: $2308 ! Счетчик начал отсчет с победы на RES 25 октября 2024 года в 21:00 ! AVULUS все еще без трофеев !",
-                en: "AVULUS is still trophy-less ! Money lost on bets: $2,308 ! The counter started counting down from the victory at RES on October 25, 2024, at 9:00 p.m. ! AVULUS is still trophy-less !"
-            },
-            visitors: {
-                ru: "посетителей",
-                en: "visitors"
-            }
-        };
-        
-        let currentLanguage = 'ru';
-        
-        // Switch language function
-        function switchLanguage() {
-            currentLanguage = currentLanguage === 'ru' ? 'en' : 'ru';
-            document.getElementById('switchLanguage').textContent = currentLanguage === 'ru' ? 'EN' : 'RU';
-            
-            // Update all text elements
-            document.getElementById('title').textContent = translations.title[currentLanguage];
-            document.getElementById('daysLabel').textContent = translations.days[currentLanguage];
-            document.getElementById('hoursLabel').textContent = translations.hours[currentLanguage];
-            document.getElementById('minutesLabel').textContent = translations.minutes[currentLanguage];
-            document.getElementById('secondsLabel').textContent = translations.seconds[currentLanguage];
-            document.querySelector('.marquee').innerHTML = translations.marquee[currentLanguage].split('!').join('<span class="blink">!</span>');
-            document.querySelector('#hitCount').nextSibling.textContent = ' ' + translations.visitors[currentLanguage];
-        }
-        
-        document.getElementById('switchLanguage').addEventListener('click', switchLanguage);
-        
-        // Detect browser language
-        const userLanguage = navigator.language || navigator.userLanguage;
-        if (userLanguage.startsWith('en')) {
-            currentLanguage = 'en';
-            switchLanguage();
-        }
         
         // Counter logic
         const targetDate = new Date('2024-10-25T21:00:00').getTime();
