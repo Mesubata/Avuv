@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>AVULUS without trophies</title>
+    <title>AVULUS без трофеев</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Comic+Sans+MS&display=swap');
@@ -174,27 +174,28 @@
 <body class="h-screen w-screen flex items-center justify-center">
     <div class="language-switcher">
         <button id="muteButton">🔊</button>
+        <button id="langButton">EN</button>
     </div>
     
     <div class="text-center pixel-border p-8 m-4">
         <h1 class="glitch text-6xl md:text-8xl font-bold mb-8" data-text="AVULUS">AVULUS</h1>
-        <div id="title" class="text-3xl md:text-5xl mb-12 counter">without trophies</div>
+        <div id="title" class="text-3xl md:text-5xl mb-12 counter" data-en="without trophies" data-ru="без трофеев">without trophies</div>
         
         <div class="counter text-4xl md:text-6xl mb-4" id="days">00</div>
-        <div id="daysLabel" class="text-xl md:text-2xl mb-8">days</div>
+        <div id="daysLabel" class="text-xl md:text-2xl mb-8" data-en="days" data-ru="дней">days</div>
         
         <div class="flex justify-center gap-8">
             <div>
                 <div class="counter text-3xl md:text-5xl" id="hours">00</div>
-                <div id="hoursLabel" class="text-lg md:text-xl">hours</div>
+                <div id="hoursLabel" class="text-lg md:text-xl" data-en="hours" data-ru="часов">hours</div>
             </div>
             <div>
                 <div class="counter text-3xl md:text-5xl" id="minutes">00</div>
-                <div id="minutesLabel" class="text-lg md:text-xl">minutes</div>
+                <div id="minutesLabel" class="text-lg md:text-xl" data-en="minutes" data-ru="минут">minutes</div>
             </div>
             <div>
                 <div class="counter text-3xl md:text-5xl" id="seconds">00</div>
-                <div id="secondsLabel" class="text-lg md:text-xl">seconds</div>
+                <div id="secondsLabel" class="text-lg md:text-xl" data-en="seconds" data-ru="секунд">seconds</div>
             </div>
         </div>
     </div>
@@ -204,7 +205,7 @@
     </div>
     
     <div class="marquee">
-        <span class="blink">!</span> AVULUS is still without trophies <span class="blink">!</span> Money lost on bets: $2,308 <span class="blink">!</span> The counter started counting down from the victory at RES Regional Finals <span class="blink">!</span> AVULUS is still trophy-less <span class="blink">!</span>
+        <span class="blink">!</span> <span data-en="AVULUS is still trophy-less" data-ru="AVULUS всё ещё без трофеев">AVULUS is still trophy-less</span> <span class="blink">!</span> <span data-en="Money lost on bets: $2,308" data-ru="Проиграно на ставках: $2,308">Money lost on bets: $2,308</span> <span class="blink">!</span> <span data-en="The counter started counting down from the victory at RES Regional Finals" data-ru="Отсчёт начался после победы на RES Regional Finals">The counter started counting down from the victory at RES Regional Finals</span> <span class="blink">!</span> <span data-en="AVULUS is still trophy-less" data-ru="AVULUS всё ещё без трофеев">AVULUS is still trophy-less</span> <span class="blink">!</span>
     </div>
     
     <audio id="bgMusic" loop autoplay>
@@ -253,6 +254,23 @@
         
         updateHitCounter();
         setInterval(updateHitCounter, 5000);
+        
+        // Language switcher
+        const langButton = document.getElementById('langButton');
+        let currentLang = 'en';
+        
+        function switchLanguage() {
+            currentLang = currentLang === 'en' ? 'ru' : 'en';
+            langButton.textContent = currentLang.toUpperCase();
+            
+            document.querySelectorAll('[data-en], [data-ru]').forEach(el => {
+                if (el.dataset[currentLang]) {
+                    el.textContent = el.dataset[currentLang];
+                }
+            });
+        }
+        
+        langButton.addEventListener('click', switchLanguage);
         
         // Mute button functionality
         const muteButton = document.getElementById('muteButton');
